@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+input[type=text], select, textarea {    
+  width: 100%;    
+  padding: 12px;    
+  border: 1px solid rgb(70, 68, 68);    
+  border-radius:4px;  
+}    
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+input[type=submit] {
+  background-color: ;Green
+  color: white;
+}
+input[type=submit]:hover {    
+  background-color: #45a049;    
+}    
+ input[type=reset] {
+  background-color: #f2f2f2;
+  color: Black;
+}
+input[type=reset]:hover {    
+  background-color:Red;    
+}       
+
+.container {
+  background-color: #f1f1f1;
+  border-radius: 5px;    
+  padding: 10px;
+}
+
+
+
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "✔";
+}
+
+
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "✖";
+}
+.row:after {    
+  content: "";    
+  display: table;    
+  clear: both;    
+}    
+</style>
+</head>
+<body>
+
+<h1>Gateways 2022</h1>
+<p1>TECHNOVID</p1>
+<div class="container">
+  <form action="/action_page.php" method="get">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" onkeypress="return (event.charCode > 64 && 
+	event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" required>
+<label for="age">Age</label>
+    <input type="number" id="age" name="age" required pattern="[1-100]{1}  maxlength="100">
+<label for="branch">Branch</label>
+    <input type="text" id="branch" name="branch" required>
+<label for="university/college">University/College</label>
+    <input type="text" id="university/college" name="university/college" required>
+<label for="state">State</label>
+    <input type="text" id="state" name="state" required>
+     <label for=address">Address</label>
+    <input type="text" id="address" name="address" required>
+           <div>
+               <label for="email">Email</label>
+               <input type="email" id="email"> 
+<label for="number">Phone-Number</label>
+            <input type="number" id="number">
+           </div>
+           <div>
+ <label for="username">Username</label>
+    <input type="text" id="username" name="username" required>
+        </div>
+
+    <label for="psw">Password</label>
+    <input type="password" id="psw" name="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+    <div class="row">
+    <input type="submit" value="Submit"></div>
+  </form>
+<div id="message">
+  <h3>Password must contain the following:</h3>
+  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+  <p id="number" class="invalid">A <b>number</b></p>
+  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+</div>				
+<script>
+var email=document.getElementById('email');
+var number=document.getElementById('number');
+var span=document.getElementsByTagName('span');
+var myInput = document.getElementById("psw");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+email.onkeydown=function()
+    {
+       const regex1=/^([a-z0-9\.-]+)@([a-z0-9]+)\.([a-z]{1,8})$/;
+       const regex2= /^([a-z0-9\.-]+)@([a-z0-9]+)\.([a-z]{1,8})(.[a-z]{1,8})$/;
+       if(regex1.test(email.value)||regex2.test(email.value))
+       {
+         span[0].innerText="Your Email is Valid";
+         span[0].style.color="lime";  
+       }
+       else{
+           span[0].innerText="Invalid Email Id";
+           span[0].style.color="red";
+       }}
+       number.onkeydown=function()
+       {
+          const regnum=/^[0-9]{10}$/;
+          if(regnum.test(number.value))
+       {
+         span[1].innerText="Your Number is Valid";
+         span[1].style.color="lime";  
+       }
+       else{
+           span[1].innerText="Invalid Phone Number";
+           span[1].style.color="red";
+       }   
+       }
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+myInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {  
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+  }
+  
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {  
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {  
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+  
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+</script>
+</body>
+</html>
