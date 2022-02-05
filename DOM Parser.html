@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Javascript</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #7cb2af
+        }
+
+        th {
+            background-color: #7c0b65;
+            color: white;
+        }
+
+        .button {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            border: 4px solid rgb(55, 12, 211);
+            background: rgba(20, 192, 4, 0.5);
+            color: rgb(230, 36, 78);
+            outline: none;
+            border-radius: 30px;
+            font-size: 30px;
+            width: 500px;
+
+        }
+
+        .button:hover {
+            color: black;
+            background: white;
+        }
+    </style>
+    <script>
+        function loadXMLDoc() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function (){
+                
+                if (this.readyState == 4 && this.status == 200) {
+                    detDetails(this);
+                }
+            };
+
+           
+            xmlhttp.open("GET", "Detail.XML", true);
+            xmlhttp.send();
+        }
+
+        function detDetails(xml) {
+            var i;
+            var xmlDoc = xml.responseXML;
+            var table =
+                `<tr><th>stu-name</th>
+                    <th>stu-university</th></tr>`;
+                            
+
+            var x = xmlDoc.getElementsByTagName("Detail");
+ 
+            for (i = 0; i < x.length; i++) {
+                table += "<tr><td>" +
+                    x[i].getElementsByTagName("stu-name")[0]
+                    .childNodes[0].nodeValue + "</td><td>" +
+                    x[i].getElementsByTagName("stu-university")[0]
+                    .childNodes[0].nodeValue + "</td><td>" +
+            }
+
+            document.getElementById("id").innerHTML = table;
+        }
+        function detDetails(xml) 
+      {
+        var x, xmlDoc, txt;
+        xmlDoc = xml.responseXML;
+        x = xmlDoc.getElementsByTagName("title")[0].childNodes[0];
+        txt = "Value: " + x.nodeValue + "<br>";
+         x.nodeValue = "";
+         txt += "Value: " + x.nodeValue;
+        document.getElementById("id").innerHTML = txt;
+      }
+        function detDetails(xml) 
+      {  
+        var xmlDoc = xml.responseXML;
+        var root = xmlDoc.documentElement;
+        var currNode = root.childNodes[1];
+        removedNode = currNode.removeChild(currNode.childNodes[1]);
+        document.getElementById("id").innerHTML =
+        "Removed node: " + removedNode.nodeName;
+      }
+        function detDetails(xml) 
+      {
+       var xmlDoc = xml.responseXML;
+       var x;    
+       var txt = "";
+       x = xmlDoc.getElementsByTagName("title")[0].childNodes[0];
+       txt += x.nodeValue + "<br>";    
+       x.nodeValue = "christ";
+       x = xmlDoc.getElementsByTagName("title")[0].childNodes[0];
+       txt += x.nodeValue + "<br>";    
+       document.getElementById("id").innerHTML = txt;
+     }
+
+</script>
+    </script>
+</head>
+
+<body>
+    <center>
+        <button type="button" class="button" 
+            onclick="loadXMLDoc()">
+            Get Details
+        </button>
+    </center>
+
+    <br><br>
+    <table id="id"></table>
+</body>
+
+</html>
